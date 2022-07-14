@@ -18,7 +18,9 @@ const timelineContainer = document.querySelector('.timeline-container')
 const _currentTime_ = document.querySelector('.current-time')
 const _totleTime_ = document.querySelector('.total-time')
 const miniplayer = document.querySelector('.video_miniplayer_button')
+const captionsBtn = document.querySelector(".captions-btn")
 
+captionsBtn.addEventListener("click", toggleCaptions)
 timelineContainer.addEventListener('mousemove', timelineUpdate);
 timelineContainer.addEventListener('mousedown', TpggleScrubbing);
 miniplayer.addEventListener('click', pictureInpictureMode)
@@ -95,6 +97,9 @@ document.addEventListener('keydown', (event) => {
 	if (event.key.toLowerCase() == 'arrowright' || event.key.toLowerCase() == 'l') {
 		skip(5)
 	}
+	if (event.key.toLowerCase() == 'c') {
+		toggleCaptions()
+	}
 
 	if (event.key.toLowerCase() == 'arrowup' || event.key.toLowerCase() == 'w') {
 		volumeUp(event)
@@ -104,6 +109,13 @@ document.addEventListener('keydown', (event) => {
 	}
 })
 
+const captions = video.textTracks[0]
+captions.mode = "hidden"
+function toggleCaptions() {
+	const isHidden = captions.mode === "hidden"
+	captions.mode = isHidden ? "showing" : "hidden"
+	container.classList.toggle("captions", isHidden)
+}
 
 function skip(duration) {
 	video.currentTime += duration
@@ -144,14 +156,9 @@ function volumeDown(event) {
 	muted_val.querySelector('span').innerHTML = `${Math.trunc(audio_vol * 100)}%`;
 }
 
-
 PlayPauseBtn.addEventListener('click', (event) => {
 	TogglePlayPause()
 });
-
-
-
-
 
 function TogglePlayPause() {
 	video.paused ? video.play() : video.pause()
@@ -223,6 +230,7 @@ function ToggleMute() {
 		container.dataset.volumeLevel = "heigh";
 	}
 }
+
 setInterval(() => {
 	let muted_val = document.querySelector('.volume_info')
 	muted_val.style.display = 'none'
@@ -261,3 +269,4 @@ video.addEventListener('leavepictureinpicture', () => {
 document.addEventListener("fullscreenchange", () => {
 	container.classList.toggle('fullscreen', document.fullscreenElement)
 })
+
