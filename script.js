@@ -43,9 +43,8 @@ function TpggleScrubbing(e) {
 	}
 	timelineUpdate(e)
 }
-//timeline
-function timelineUpdate(event) {
 
+function timelineUpdate(event) {
 	const rect = timelineContainer.getBoundingClientRect()
 	const persent = Math.min(Math.max(0, event.x - rect.x), rect.width) / rect.width
 	const previewImageNumber = Math.max(
@@ -144,7 +143,7 @@ function volumeDown(event) {
 	muted_val.style.display = 'block'
 	event.preventDefault();
 	let audio_vol = video.volume;
-	if (audio_vol !=0 ) {
+	if (audio_vol != 0) {
 		try {
 			video.volume = audio_vol - 0.05;
 		}
